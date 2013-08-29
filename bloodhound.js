@@ -5,7 +5,7 @@
  */
 
 // Keep the original methods but rename to actualAddEventListener and actualRemoveEventListener
-Node.prototype.actualAddEventListener = Node.prototype.addEventListener;
+Node.prototype.actualAddEventListener    = Node.prototype.addEventListener;
 Node.prototype.actualRemoveEventListener = Node.prototype.removeEventListener;
 
 /**
@@ -20,7 +20,7 @@ Node.prototype.checkEventSummary = function( eventType ) {
     _results = [ ];
 
     for ( _i = 0, _len = this.listenerSummary.length; _i < _len; _i++ ) {
-        x = this.listenerSummary.[ _i ];
+        x = this.listenerSummary[ _i ];
         if ( x === eventType ) {
             return true;
         }
@@ -45,7 +45,7 @@ Array.prototype.removeEventSummary = function( eventType ) {
             _results.push( x );
         }
     }
-    this.listenerSummary = _results;
+    return _results;
 };
 
 /**
@@ -75,6 +75,6 @@ Node.prototype.addEventListener = function( type, listener, useCapture ) {
 Node.prototype.removeEventListener = function( type, listener, useCapture ) {
 
     this.actualRemoveEventListener( type, listener, useCapture );
-    this.listenerSummary.removeEventSummary( type );
+    this.listenerSummary = this.listenerSummary.removeEventSummary( type );
 
 };
