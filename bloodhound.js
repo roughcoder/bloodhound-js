@@ -19,13 +19,18 @@ Node.prototype.checkEventSummary = function( eventType ) {
 
     _results = [ ];
 
-    for ( _i = 0, _len = this.listenerSummary.length; _i < _len; _i++ ) {
-        x = this.listenerSummary[ _i ];
-        if ( x === eventType ) {
-            return true;
+    if ( this.listenerSummary ){
+        for ( _i = 0, _len = this.listenerSummary.length; _i < _len; _i++ ) {
+            x = this.listenerSummary[ _i ];
+            if ( x === eventType ) {
+                return true;
+            }
         }
     }
+
     return false;
+
+
 
 };
 
@@ -59,11 +64,10 @@ Node.prototype.addEventListener = function( type, listener, useCapture ) {
     this.actualAddEventListener( type, listener, useCapture );
 
     if ( !this.listenerSummary ) {
-        this.listenerSummary = new Array( )
+        this.listenerSummary = new Array( );
     };
 
     this.listenerSummary.push( type );
-
 };
 
 /**
@@ -75,6 +79,8 @@ Node.prototype.addEventListener = function( type, listener, useCapture ) {
 Node.prototype.removeEventListener = function( type, listener, useCapture ) {
 
     this.actualRemoveEventListener( type, listener, useCapture );
-    this.listenerSummary = this.listenerSummary.removeEventSummary( type );
+    if ( this.listenerSummary ){
+        this.listenerSummary = this.listenerSummary.removeEventSummary( type );
+    }
 
 };
